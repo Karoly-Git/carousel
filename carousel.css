@@ -1,0 +1,103 @@
+  .carousel * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+  }
+
+  .carousel {
+      display: flex;
+      flex-direction: column;
+      margin-left: auto;
+      margin-right: auto;
+  }
+
+  .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      min-height: 100%;
+      position: relative;
+      top: 0;
+      z-index: 101;
+  }
+
+  .controlBtn {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      background-color: transparent;
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 3rem;
+      border: none;
+      cursor: pointer;
+      user-select: none;
+  }
+
+  .controlBtn:hover {
+      color: white;
+  }
+
+  .btnL {
+      padding-left: 3%;
+      padding-right: 5%;
+  }
+
+  .btnR {
+      padding-left: 5%;
+      padding-right: 3%;
+  }
+
+  .btnL:hover {
+      background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), transparent);
+  }
+
+  .btnR:hover {
+      background-image: linear-gradient(to left, rgba(0, 0, 0, 0.5), transparent);
+  }
+
+  .slideBox {
+      display: flex;
+      min-width: 100%;
+      min-height: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      top: -100%;
+      overflow: hidden;
+  }
+
+  .slide {
+      min-width: 100%;
+      width: 100%;
+      height: 100%;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      position: relative;
+      z-index: 50;
+      left: 0%;
+  }
+
+  .indicatorBox {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      min-height: 3rem;
+      position: relative;
+      top: calc(-1 * (100% + 3rem));
+  }
+
+  .indicator {
+      width: 1.35rem;
+      height: 0.35rem;
+      background-color: transparent;
+      border: 2px solid white;
+      position: relative;
+      z-index: 102;
+  }
+
+  .indicator:not(.indicator:last-child) {
+      margin-right: 0.6rem;
+  }
