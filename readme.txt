@@ -50,9 +50,5 @@ B)  HOW TO SETUP:
             numOfSlides:    Number of files are in the 'img' folder.
 
 
-    
-
-
-
 
     
