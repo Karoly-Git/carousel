@@ -11,6 +11,7 @@ A)  FOLDER STRUCTURE:
         |__ carousel.css
         |__ carousel.js
         |__ config.js
+        |__ favicon.jpg
         |__ index.html
         |__ readme.txt
 
