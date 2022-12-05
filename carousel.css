@@ -1,6 +1,5 @@
 :root {
-    --carousel-width: calc(100vw - 20px);
-    /*Image aspect ratio, 'height / width'. All images should have the same aspect ratio!*/
+    --carousel-width: 80;
     --aspec-ratio: calc(500/1000);
 }
 
@@ -15,8 +14,8 @@
     flex-direction: column;
     margin-left: auto;
     margin-right: auto;
-    width: var(--carousel-width);
-    height: calc(var(--carousel-width) * var(--aspec-ratio));
+    width: calc(var(--carousel-width) * 1vw - 20px);
+    height: calc((var(--carousel-width) * 1vw - 20px) * var(--aspec-ratio));
 }
 
 .controls {
