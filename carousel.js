@@ -2,8 +2,6 @@ import config from "./config.js";
 
 const slidingTime = config.slidingTime;
 const timeGap = config.timeGap;
-const carouselWidth = config.carouselWidth;
-const aspectRatio = config.aspectRatio;
 const numOfSlides = config.numOfSlides;
 
 let layout = numOfSlides; //Number of possible layouts.
@@ -19,13 +17,6 @@ carousel.innerHTML = `
   </div>
   <div class="slideBox"></div>
   <div class="indicatorBox"></div>`;
-
-carousel.style.width = `${carouselWidth}%`;
-carousel.style.height = `${aspectRatio * carousel.clientWidth}px`;
-
-window.addEventListener('resize', () => {
-  carousel.style.height = `${aspectRatio * carousel.clientWidth}px`;
-})
 // *** Building the carousel *** //
 
 // * Building the indicatorBox * //
