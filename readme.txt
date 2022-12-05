@@ -23,18 +23,18 @@ B)  HOW TO SETUP:
     2.  There are 5 template images in the 'img' folder.
         Delete those files and add your own images.
         Minimum 3 images must be in the folder. No maximum limit. 
-        All images should have the same aspect ratio!
+        All images must have the same aspect ratio!
         Each image extension should be 'jpg'!
         Rename the files to 'img1.jpg', 'img2.jpg', 'img3.jpg', and so on...
     
-    3.  Add this script to the head of the html and make sure
+    3.  Add the following script to the head of the html and make sure
         the 'src' points to the 'carousel.js' with the correct path:
         <script type="module" defer src="./carousel.js"></script>
         
-    4.  Add this css link to the head of the html:
+    4.  Add the following css link to the head of the html:
         <link rel="stylesheet" href="./carousel.css" />
     
-    5.  Add this div tag to your html:
+    5.  Add the following div tag to your html:
         <div class="carousel"></div>
 
     6.  Specify the following parameters in the 'carousel.css' file:
