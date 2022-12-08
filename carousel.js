@@ -5,8 +5,8 @@ const timeGap = config.timeGap;
 const numOfSlides = config.numOfSlides;
 
 let layout = numOfSlides; //Number of possible layouts.
-let images = []; //List of images, will be filled up automatically with the file names later.
-const dataOfSlides = []; //Data of the slides, will be filled up automatically with the properties later.
+let images = [];          //List of images, will be filled up automatically with the file names later.
+const dataOfSlides = [];  //Data of the slides, will be filled up automatically with parameters later.
 
 // * Building the carousel * //
 const carousel = document.querySelector(".carousel");
@@ -21,21 +21,21 @@ carousel.innerHTML = `
 
 // * Building the indicatorBox * //
 const indicatorBox = document.querySelector(".indicatorBox");
-for (let i = 1; i <= numOfSlides; i++) {
+for (let i = 0; i < numOfSlides; i++) {
   indicatorBox.innerHTML += `<button class="indicator"></button>`;
 }
 // *** Building the indicatorBox *** //
 
 // * Filling up the images list * //
 images.push(`img${numOfSlides}.jpg`);
-for (let i = 1; i <= numOfSlides; i++) {
-  images.push(`img${i}.jpg`);
+for (let i = 0; i < numOfSlides; i++) {
+  images.push(`img${i + 1}.jpg`);
 }
 // *** Filling up the images list *** //
 
 // * Building the slideBox * //
 const slideBox = document.querySelector(".slideBox");
-for (let i = 1; i <= numOfSlides; i++) {
+for (let i = 0; i < numOfSlides; i++) {
   slideBox.innerHTML += `<div class="slide"></div>`;
 }
 // *** Building the slideBox *** //
@@ -49,10 +49,10 @@ slides.forEach((slide, i) => {
 // *** Setting the background images and transition of the slides *** //
 
 // * Filling up the slide data * //
-for (let i = 1; i <= numOfSlides; i++) {
+for (let i = 0; i < numOfSlides; i++) {
   dataOfSlides.push({
     left: -100, //The relative position
-    tR: `all ${slidingTime}ms esae-in-out` //Transition
+    transitionTime: `all ${slidingTime}ms esae-in-out` //Transition
   });
 }
 // *** Filling up the slide data *** //
@@ -60,36 +60,44 @@ for (let i = 1; i <= numOfSlides; i++) {
 // * Setting the style properties of the slides * //
 slides.forEach((slide, i) => {
   slide.style.left = `${dataOfSlides[i].left}%`;
-  slide.style.transition = dataOfSlides[i].tR;
+  slide.style.transition = dataOfSlides[i].transitionTime;
 });
 // *** Setting the style properties of the slides *** //
 
-let activeIndex = 0; //The index of the active indicator initially.
+let activeIndex = 0;  //The index of the active indicator.
 
-// * This function sets the style properties of the indicators * //
+// * Setting the style properties of the indicators * //
 const indicators = document.querySelectorAll(".indicator");
 function setIndicator() {
+  /**
+   * 1. Iterates through the all indicators and sets the style properties to same on all.
+   * 2. Sets different style on the active indicator.
+   */
+
+  //1.
   indicators.forEach((indi) => {
     indi.style.backgroundColor = "transparent";
     indi.style.transition = `all ${slidingTime * 0.5}ms ease-in-out`;
   });
+
+  //2.
   indicators[activeIndex].style.backgroundColor = "white";
 }
-// *** This function sets the style properties of the indicators *** //
+// *** Setting the style properties of the indicators *** //
 
-setIndicator(); //Styling the indicators
+setIndicator();
 
 /*To prevent the cross clicking and messing up the animation,
-the buttons are suspended while image is sliding.
-Why I didn't use the 'disabled' argument? Because there is a 'mouseover' event listener set
-to the buttons, and if the button is disabled, then the event lisener doesn't work.
+the left and right control buttons are suspended while image is sliding.
 */
 let isClickSuspended = false;
 
 function slideToRight() {
+  /**
+   * 1. If click is suspended then nothing happens when clicking on the control buttons.
+   */
   if (!isClickSuspended) {
-    //This lets to click only if slide is not moving.
-    isClickSuspended = true; //After clicking, it disables the buttons.
+    isClickSuspended = true;
 
     setTimeout(() => {
       //This enables the buttons after the sliding has finished.
@@ -126,7 +134,7 @@ function slideToRight() {
 
     slides.forEach((slide, i) => {
       slide.style.left = `${dataOfSlides[i].left}%`;
-      slide.style.transition = dataOfSlides[i].tR;
+      slide.style.transition = dataOfSlides[i].transitionTime;
     });
 
     layout === 1 ? (layout = numOfSlides) : layout--;
