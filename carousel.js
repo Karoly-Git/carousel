@@ -188,35 +188,39 @@ btnR.addEventListener("click", () => {
   slideToRight();
 });
 
-let autoRun = setInterval(() => {
-  slideToRight();
-}, timeGap + slidingTime);
-//console.log(autoRun, "STARTED");
-
-let id = autoRun;
-
-carousel.addEventListener("mouseover", () => {
-  clearInterval(id);
-  //console.log(id, "STOPED");
-});
-
-carousel.addEventListener("mouseout", () => {
-  let runAgain = setInterval(() => {
+function autoRun() {
+  let autoRun = setInterval(() => {
     slideToRight();
   }, timeGap + slidingTime);
-  id = runAgain;
-  //console.log(id, "STARTED");
-});
+  //console.log(autoRun, "STARTED");
 
-window.addEventListener("blur", () => {
-  clearInterval(id);
-  //console.log(id, "STOPED");
-});
+  let id = autoRun;
 
-window.addEventListener("focus", () => {
-  let runAgain = setInterval(() => {
-    slideToRight();
-  }, timeGap + slidingTime);
-  id = runAgain;
-  //console.log(id, "STARTED");
-});
+  carousel.addEventListener("mouseover", () => {
+    clearInterval(id);
+    //console.log(id, "STOPED");
+  });
+
+  carousel.addEventListener("mouseout", () => {
+    let runAgain = setInterval(() => {
+      slideToRight();
+    }, timeGap + slidingTime);
+    id = runAgain;
+    //console.log(id, "STARTED");
+  });
+
+  window.addEventListener("blur", () => {
+    clearInterval(id);
+    //console.log(id, "STOPED");
+  });
+
+  window.addEventListener("focus", () => {
+    let runAgain = setInterval(() => {
+      slideToRight();
+    }, timeGap + slidingTime);
+    id = runAgain;
+    //console.log(id, "STARTED");
+  });
+}
+
+autoRun();
