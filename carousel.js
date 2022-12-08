@@ -189,6 +189,15 @@ btnR.addEventListener("click", () => {
 });
 
 function autoRun() {
+  /**
+   * 1. Sliding starts automatically when page is loading.
+   * 2. Sliding stoppes when mouse is over the carousel.
+   * 3. Sliding starts again when mouse leaves the carousel.
+   * 4. Sliding stoppes when windows is not active.
+   * 5. Sliding starts again when window is active again.
+   */
+
+  //1.
   let autoRun = setInterval(() => {
     slideToRight();
   }, timeGap + slidingTime);
@@ -196,11 +205,13 @@ function autoRun() {
 
   let id = autoRun;
 
+  //2.
   carousel.addEventListener("mouseover", () => {
     clearInterval(id);
-    //console.log(id, "STOPED");
+    //console.log(id, "STOPPED");
   });
 
+  //3.
   carousel.addEventListener("mouseout", () => {
     let runAgain = setInterval(() => {
       slideToRight();
@@ -209,11 +220,13 @@ function autoRun() {
     //console.log(id, "STARTED");
   });
 
+  //4.
   window.addEventListener("blur", () => {
     clearInterval(id);
-    //console.log(id, "STOPED");
+    //console.log(id, "STOPPED");
   });
 
+  //5.
   window.addEventListener("focus", () => {
     let runAgain = setInterval(() => {
       slideToRight();
