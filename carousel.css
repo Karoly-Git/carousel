@@ -15,7 +15,6 @@
     margin-left: auto;
     margin-right: auto;
     width: calc(var(--carousel-width) * 1vw - 20px);
-    width: 150px;
     height: calc((var(--carousel-width) * 1vw - 20px) * var(--aspec-ratio));
 }
 
@@ -72,7 +71,7 @@
     margin-right: auto;
     position: relative;
     top: -100%;
-    *overflow: hidden;
+    overflow: hidden;
 }
 
 .slide {
