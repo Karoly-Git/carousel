@@ -93,6 +93,8 @@ function slideToRight() {
    *    then set the displayed index back to zero.
    * 5. Synchronize the indicator to the displayed slide.
    * 6. Jump the first slide of the queue to the last position, then slide the whole queue to the left. 
+   * 7. Decrease the current layout by 1, however,
+   *    if it is 1, then set it to the value of the number of the slides.
    */
 
   //1.
