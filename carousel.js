@@ -11,8 +11,8 @@ let images = [];          //List of images, will be filled up automatically with
 const carousel = document.querySelector(".carousel");
 carousel.innerHTML = `
   <div class="controls">
-    <button class="btnL controlBtn">&lsaquo;</button>
-    <button class="btnR controlBtn">&rsaquo;</button>
+    <button class="btnLeft controlBtn">&lsaquo;</button>
+    <button class="btnRight controlBtn">&rsaquo;</button>
   </div>
   <div class="slideBox"></div>
   <div class="indicatorBox"></div>`;
@@ -175,14 +175,14 @@ function backward() {
   }
 }
 
-const btnL = document.querySelector(".btnL");
-const btnR = document.querySelector(".btnR");
+const btnLeft = document.querySelector(".btnLeft");
+const btnRight = document.querySelector(".btnRight");
 
-btnL.addEventListener("click", () => {
+btnLeft.addEventListener("click", () => {
   backward();
 });
 
-btnR.addEventListener("click", () => {
+btnRight.addEventListener("click", () => {
   forward();
 });
 
