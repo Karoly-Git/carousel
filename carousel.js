@@ -4,7 +4,7 @@ const slidingTime = config.slidingTime;
 const timeGap = config.timeGap;
 const numOfSlides = config.numOfSlides;
 
-let currentLayout = numOfSlides; //Number of possible currentLayouts.
+let currentLayout = numOfSlides;    //Number of the possible layout is equal to the number of slides/filses.
 let images = [];          //List of images, will be filled up automatically with the file names later.
 
 // * Building the carousel * //
@@ -50,7 +50,6 @@ slides.forEach((slide, i) => {
 // * Setting the style properties of the slides * //
 slides.forEach((slide, i) => {
   slide.style.left = `${-100}%`;
-  slide.style.transition = `all ${slidingTime}ms esae-in-out`;
 });
 // *** Setting the style properties of the slides *** //
 
@@ -82,12 +81,12 @@ the left and right control buttons are suspended while image is sliding.
 */
 let isClickSuspended = false;
 
-function slideToRight() {
+function forward() {
   /**
    * Remember: Initially the dispayed slide is the second slide in the queue.
    * 1. Click is suspended while sliding is in progress, nothing happens when clicking on the control buttons.
    * 2. Click is enabled again when sliding has finished.
-   * 3. Set the transition of the first slide of the queue to unset, and the others to set. 
+   * 3. Set the z-index of the first slide of the queue to -50, and the others to 50. 
    * 4. Increase the index of the displayed slide by 1, however,
    *    if the displayed slide is the last slide of the initial queue,
    *    then set the displayed index back to zero.
@@ -97,8 +96,8 @@ function slideToRight() {
    *    if it is 1, then set it to the value of the number of the slides.
    */
 
-  //1.
   if (!isClickSuspended) {
+    //1.
     isClickSuspended = true;
 
     //2.
@@ -109,9 +108,9 @@ function slideToRight() {
     //3.
     slides.forEach((slide, i) => {
       if (i === indexOfDisplayed) {
-        slide.style.transition = "unset";
+        slide.style.zIndex = '-50';
       } else {
-        slide.style.transition = `all ${slidingTime}ms ease-in-out`;
+        slide.style.zIndex = '50';
       }
     });
 
@@ -136,7 +135,7 @@ function slideToRight() {
   }
 }
 
-function slideToLeft() {
+function backward() {
   if (!isClickSuspended) {
     isClickSuspended = true;
 
@@ -145,12 +144,12 @@ function slideToLeft() {
     }, slidingTime);
 
     slides.forEach((slide, i) => {
-      slide.style.transition = `all ${slidingTime}ms ease-in-out`;
+      slide.style.zIndex = '50';
     });
 
     indexOfDisplayed === 0
-      ? (slides[numOfSlides - indexOfDisplayed - 1].style.transition = "unset")
-      : (slides[indexOfDisplayed - 1].style.transition = "unset");
+      ? (slides[numOfSlides - indexOfDisplayed - 1].style.zIndex = "-50")
+      : (slides[indexOfDisplayed - 1].style.zIndex = "-50");
 
     indexOfDisplayed === 0 ? (indexOfDisplayed = numOfSlides - 1) : indexOfDisplayed--;
 
@@ -180,11 +179,11 @@ const btnL = document.querySelector(".btnL");
 const btnR = document.querySelector(".btnR");
 
 btnL.addEventListener("click", () => {
-  slideToLeft();
+  backward();
 });
 
 btnR.addEventListener("click", () => {
-  slideToRight();
+  forward();
 });
 
 function autoRun() {
@@ -198,7 +197,7 @@ function autoRun() {
 
   //1.
   let autoRun = setInterval(() => {
-    slideToRight();
+    forward();
   }, timeGap + slidingTime);
   //console.log(autoRun, "STARTED");
 
@@ -213,7 +212,7 @@ function autoRun() {
   //3.
   carousel.addEventListener("mouseout", () => {
     let runAgain = setInterval(() => {
-      slideToRight();
+      forward();
     }, timeGap + slidingTime);
     id = runAgain;
     //console.log(id, "STARTED");
@@ -228,7 +227,7 @@ function autoRun() {
   //5.
   window.addEventListener("focus", () => {
     let runAgain = setInterval(() => {
-      slideToRight();
+      forward();
     }, timeGap + slidingTime);
     id = runAgain;
     //console.log(id, "STARTED");
