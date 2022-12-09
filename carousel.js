@@ -4,9 +4,8 @@ const slidingTime = config.slidingTime;
 const timeGap = config.timeGap;
 const numOfSlides = config.numOfSlides;
 
-let layout = numOfSlides; //Number of possible layouts.
+let currentLayout = numOfSlides; //Number of possible currentLayouts.
 let images = [];          //List of images, will be filled up automatically with the file names later.
-const dataOfSlides = [];  //Data of the slides, will be filled up automatically with parameters later.
 
 // * Building the carousel * //
 const carousel = document.querySelector(".carousel");
@@ -48,23 +47,14 @@ slides.forEach((slide, i) => {
 });
 // *** Setting the background images and transition of the slides *** //
 
-// * Filling up the slide data * //
-for (let i = 0; i < numOfSlides; i++) {
-  dataOfSlides.push({
-    left: -100, //The relative position
-    transitionTime: `all ${slidingTime}ms esae-in-out` //Transition
-  });
-}
-// *** Filling up the slide data *** //
-
 // * Setting the style properties of the slides * //
 slides.forEach((slide, i) => {
-  slide.style.left = `${dataOfSlides[i].left}%`;
-  slide.style.transition = dataOfSlides[i].transitionTime;
+  slide.style.left = `${-100}%`;
+  slide.style.transition = `all ${slidingTime}ms esae-in-out`;
 });
 // *** Setting the style properties of the slides *** //
 
-let activeIndex = 0;  //The index of the active indicator.
+let indexOfDisplayed = 0;  //The index of the active indicator.
 
 // * Setting the style properties of the indicators * //
 const indicators = document.querySelectorAll(".indicator");
@@ -81,7 +71,7 @@ function setIndicator() {
   });
 
   //2.
-  indicators[activeIndex].style.backgroundColor = "white";
+  indicators[indexOfDisplayed].style.backgroundColor = "white";
 }
 // *** Setting the style properties of the indicators *** //
 
@@ -94,56 +84,60 @@ let isClickSuspended = false;
 
 function slideToRight() {
   /**
-   * 1. If click is suspended then nothing happens when clicking on the control buttons.
+   * Remember: Initially the dispayed slide is the second slide in the queue.
+   * 1. Click is suspended while sliding is in progress, nothing happens when clicking on the control buttons.
+   * 2. Click is enabled again when sliding has finished.
+   * 3. Set the transition of the first slide of the queue to unset, and the others to set. 
+   * 4. Increase the index of the displayed slide by 1, however,
+   *    if the displayed slide is the last slide of the initial queue,
+   *    then set the displayed index back to zero.
+   * 5. Synchronize the indicator to the displayed slide.
+   * 6. Jump the first slide of the queue to the last position, then slide the whole queue to the left. 
    */
+
+  //1.
   if (!isClickSuspended) {
     isClickSuspended = true;
 
+    //2.
     setTimeout(() => {
-      //This enables the buttons after the sliding has finished.
       isClickSuspended = false;
     }, slidingTime);
 
-    //
+    //3.
     slides.forEach((slide, i) => {
-      slide.style.transition = `all ${slidingTime}ms ease-in-out`;
-    });
-    slides.forEach((slide, i) => {
-      if (i === activeIndex) {
-        slide.style.transition = "";
+      if (i === indexOfDisplayed) {
+        slide.style.transition = "unset";
+      } else {
+        slide.style.transition = `all ${slidingTime}ms ease-in-out`;
       }
     });
 
-    activeIndex === numOfSlides - 1 ? (activeIndex = 0) : activeIndex++;
+    //4.
+    indexOfDisplayed === numOfSlides - 1 ? (indexOfDisplayed = 0) : indexOfDisplayed++;
+
+    //5.
     setIndicator();
 
-    dataOfSlides.forEach((data) => {
-      data.left -= 100;
-    });
-
+    //6.
     slides.forEach((slide, i) => {
-      slide.style.left = `${dataOfSlides[i].left}%`;
-    });
-
-    //for (let i = 1; i <= numOfSlides; i++) {
-    for (let j = 0; j <= numOfSlides; j++) {
-      if (layout === numOfSlides - j) {
-        dataOfSlides[j].left = -200 + (numOfSlides - j) * 100;
+      if (currentLayout === numOfSlides - i) {
+        slide.style.left = `${-200 + (numOfSlides - i) * 100}%`;
+      } else {
+        let newLeft = Number(slide.style.left.split('%').join('')) - 100;
+        slide.style.left = `${newLeft}%`;
       }
-    }
-
-    slides.forEach((slide, i) => {
-      slide.style.left = `${dataOfSlides[i].left}%`;
-      slide.style.transition = dataOfSlides[i].transitionTime;
     });
 
-    layout === 1 ? (layout = numOfSlides) : layout--;
+    //7.
+    currentLayout === 1 ? (currentLayout = numOfSlides) : currentLayout--;
   }
 }
 
 function slideToLeft() {
   if (!isClickSuspended) {
     isClickSuspended = true;
+
     setTimeout(() => {
       isClickSuspended = false;
     }, slidingTime);
@@ -152,36 +146,31 @@ function slideToLeft() {
       slide.style.transition = `all ${slidingTime}ms ease-in-out`;
     });
 
-    activeIndex === 0
-      ? (slides[numOfSlides - activeIndex - 1].style.transition = "")
-      : (slides[activeIndex - 1].style.transition = "");
+    indexOfDisplayed === 0
+      ? (slides[numOfSlides - indexOfDisplayed - 1].style.transition = "unset")
+      : (slides[indexOfDisplayed - 1].style.transition = "unset");
 
-    activeIndex === 0 ? (activeIndex = numOfSlides - 1) : activeIndex--;
+    indexOfDisplayed === 0 ? (indexOfDisplayed = numOfSlides - 1) : indexOfDisplayed--;
 
     setIndicator();
 
     for (let i = 0; i < numOfSlides; i++) {
       for (let j = 0; j < numOfSlides - 1; j++) {
-        if (layout === numOfSlides - j - 1) {
-          dataOfSlides[j].left = -(numOfSlides + -(numOfSlides - 2) + j) * 100;
+        if (currentLayout === numOfSlides - j - 1) {
+          slides[j].style.left = `${-(numOfSlides + -(numOfSlides - 2) + j) * 100}%`;
         }
-        if (layout === numOfSlides) {
-          dataOfSlides[numOfSlides - 1].left = -(numOfSlides + 1) * 100;
+        if (currentLayout === numOfSlides) {
+          slides[numOfSlides - 1].style.left = `${-(numOfSlides + 1) * 100}%`;
         }
       }
     }
 
     slides.forEach((slide, i) => {
-      slide.style.left = `${dataOfSlides[i].left}%`;
+      let newLeft = Number(slide.style.left.split('%').join('')) + 100;
+      slide.style.left = `${newLeft}%`;
     });
 
-    dataOfSlides.forEach((data) => {
-      data.left += 100;
-    });
-    slides.forEach((slide, i) => {
-      slide.style.left = `${dataOfSlides[i].left}%`;
-    });
-    layout === numOfSlides ? (layout = 1) : layout++;
+    currentLayout === numOfSlides ? (currentLayout = 1) : currentLayout++;
   }
 }
 

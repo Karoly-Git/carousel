@@ -71,7 +71,7 @@
     margin-right: auto;
     position: relative;
     top: -100%;
-    overflow: hidden;
+    *overflow: hidden;
 }
 
 .slide {
