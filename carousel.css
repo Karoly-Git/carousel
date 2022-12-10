@@ -45,21 +45,21 @@
     color: white;
 }
 
-.btnL {
+.btnLeft {
     padding-left: 3%;
     padding-right: 5%;
 }
 
-.btnR {
+.btnRight {
     padding-left: 5%;
     padding-right: 3%;
 }
 
-.btnL:hover {
+.btnLeft:hover {
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), transparent);
 }
 
-.btnR:hover {
+.btnRight:hover {
     background-image: linear-gradient(to left, rgba(0, 0, 0, 0.5), transparent);
 }
 
