@@ -53,7 +53,7 @@ slides.forEach((slide, i) => {
 });
 // *** Setting the style properties of the slides *** //
 
-let indexOfDisplayed = 0;  //The index of the active indicator.
+let indexOfDisplayed = 0;  //The index of the active indicator and the displayed slide.
 
 // * Setting the style properties of the indicators * //
 const indicators = document.querySelectorAll(".indicator");
@@ -62,13 +62,11 @@ function setIndicator() {
    * 1. Iterates through the all indicators and sets the style properties to same on all.
    * 2. Sets different style on the active indicator.
    */
-
   //1.
   indicators.forEach((indi) => {
     indi.style.backgroundColor = "transparent";
     indi.style.transition = `all ${slidingTime * 0.5}ms ease-in-out`;
   });
-
   //2.
   indicators[indexOfDisplayed].style.backgroundColor = "white";
 }
@@ -133,8 +131,8 @@ function backward() {
    * 3. Set the z-index of the first and last slide to -50, and the others to 50. 
    * 4. Decrease the indexOfDisplayed by 1, however, if it is 0, then set it to the last index.
    * 5. Synchronize the indicator to the displayed slide.
-   * 6. ******** 
-   * 7. Move the last slide to the first position, also move all other slides to right. 
+   * 6. Move the last slide to the first position.
+   * 7. Move all slides to right. 
    * 8. Increase the current layout by 1, however, if it is the initial value, then set it to 1.
    */
   if (!isClickSuspended) {
@@ -157,13 +155,11 @@ function backward() {
     setIndicator();
     //6.
     for (let i = 0; i < numOfSlides; i++) {
-      for (let j = 0; j < numOfSlides - 1; j++) {
-        if (currentLayout === numOfSlides - j - 1) {
-          slides[j].style.left = `${-(numOfSlides + -(numOfSlides - 2) + j) * 100}%`;
-        }
-        if (currentLayout === numOfSlides) {
-          slides[numOfSlides - 1].style.left = `${-(numOfSlides + 1) * 100}%`;
-        }
+      if (currentLayout === numOfSlides - i - 1) {
+        slides[i].style.left = `${-(numOfSlides + -(numOfSlides - 2) + i) * 100}%`;
+      }
+      if (currentLayout === numOfSlides) {
+        slides[numOfSlides - 1].style.left = `${-(numOfSlides + 1) * 100}%`;
       }
     }
     //7.
@@ -176,7 +172,7 @@ function backward() {
   }
 }
 
-// * Setting the click event of the control buttons  * //
+// * Setting the click event of the control buttons * //
 const btnLeft = document.querySelector(".btnLeft");
 const btnRight = document.querySelector(".btnRight");
 btnLeft.addEventListener("click", () => {
@@ -199,12 +195,12 @@ function autoRun() {
   let autoRun = setInterval(() => {
     forward();
   }, timeGap + slidingTime);
-  console.log(autoRun, "STARTED");
+  //console.log(autoRun, "STARTED");
   let id = autoRun;
   //2.
   carousel.addEventListener("mouseover", () => {
     clearInterval(id);
-    console.log(id, "STOPPED");
+    //console.log(id, "STOPPED");
   });
   //3.
   carousel.addEventListener("mouseout", () => {
@@ -212,12 +208,12 @@ function autoRun() {
       forward();
     }, timeGap + slidingTime);
     id = runAgain;
-    console.log(id, "STARTED");
+    //console.log(id, "STARTED");
   });
   //4.
   window.addEventListener("blur", () => {
     clearInterval(id);
-    console.log(id, "STOPPED");
+    //console.log(id, "STOPPED");
   });
   //5.
   window.addEventListener("focus", () => {
@@ -225,7 +221,7 @@ function autoRun() {
       forward();
     }, timeGap + slidingTime);
     id = runAgain;
-    console.log(id, "STARTED");
+    //console.log(id, "STARTED");
   });
 }
 
