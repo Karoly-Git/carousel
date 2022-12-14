@@ -27,14 +27,14 @@ B)  HOW TO SETUP:
         Each image extension should be 'jpg'!
         Rename the files to 'img1.jpg', 'img2.jpg', 'img3.jpg', and so on...
     
-    3.  Add the following script to the head of the html and make sure
-        the 'src' points to the 'carousel.js' with the correct path:
-        <script type="module" defer src="./carousel.js"></script>
+    3.  Add the following script to the end of the body in the HTML file.
+        Make sure the 'src' points to the 'carousel.js' with the correct path.
+        <script type="module" src="./carousel.js"></script>
         
-    4.  Add the following css link to the head of the html:
+    4.  Add the following css link to the head of the HTML file.
         <link rel="stylesheet" href="./carousel.css" />
     
-    5.  Add the following div tag to your html:
+    5.  Add the following div tag to the HTML file.
         <div class="carousel"></div>
 
     6.  Specify the following parameters in the 'carousel.css' file:
